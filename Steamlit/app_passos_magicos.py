@@ -440,7 +440,7 @@ if pagina == "📋 Apresentação":
     st.markdown("""
     <div class="pm-presentation-wrapper">
         <iframe
-            src="https://gamma.app/embed/a7txgnxyhampsvg"
+            src="https://gamma.app/embed/xeo22ejpcx2z9bi"
             allow="fullscreen"
             allowfullscreen
             title="Passos Mágicos — Análise de Dados & Modelo Preditivo de Risco">
@@ -448,7 +448,7 @@ if pagina == "📋 Apresentação":
     </div>
     <div style="margin-top:16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
         <a class="pm-fs-btn"
-           href="https://gamma.app/embed/a7txgnxyhampsvg"
+           href="https://gamma.app/embed/xeo22ejpcx2z9bi"
            target="_blank" rel="noopener">
             ⛶ &nbsp;Abrir em Tela Cheia
         </a>
