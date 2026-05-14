@@ -296,4 +296,4 @@ if arquivo is not None:
 
     except Exception as e:
         st.error(f'Erro no processamento do CSV: {e}')
-```
+
