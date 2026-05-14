@@ -21,7 +21,7 @@ st.set_page_config(
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-model_path = os.path.join(BASE_DIR, 'models', 'modelo.pkl')
+model_path = os.path.join(BASE_DIR, 'modelo.pkl')
 
 # ============================================
 # CARREGAR MODELO
