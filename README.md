@@ -3,17 +3,23 @@
 Projeto desenvolvido para a **Pós-Graduação em Data Analytics — FIAP**, com o objetivo de combater a defasagem educacional através de dados e inteligência artificial.
 
 ## 🔗 Links do Projeto
+* **🚀 Aplicação Streamlit:** [Analytics - Passos Mágicos](https://passosmagicos.streamlit.app/)
 * **🎥 Vídeo de Demonstração:** [Assista aqui](https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/view?usp=sharing)
 * **🖼️ Apresentação Completa:** [Acesse os slides](https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/edit?usp=drive_link&ouid=113160887725821989157&rtpof=true&sd=true)
 
+## 📂 Estrutura do Repositório
+A organização do projeto segue a seguinte hierarquia de pastas:
+
+* **`Arquivos/`**: Bases de dados brutas e processadas.
+* **`Streamlit/`**: Código-fonte da aplicação web e dashboards.
+* **`Storytelling/`**: Notebooks de análise exploratória e apresentações.
+* **`README.md`**: Documentação principal do projeto.
+
 ## 📁 Base de Dados
-O projeto utilizou uma base longitudinal composta por:
-* **3.030** registros.
-* Dados coletados entre **2022 e 2024**.
-* Mais de **34 variáveis** multidimensionais, incluindo:
-    * Indicadores acadêmicos e pedagógicos.
-    * Engajamento e indicadores psicossociais.
-    * Informações comportamentais.
+O projeto utilizou uma base longitudinal contendo:
+* **3.030** registros de alunos.
+* Dados históricos entre **2022 e 2024**.
+* Mais de **34 variáveis** multidimensionais (acadêmicas, psicossociais e comportamentais).
 
 ## 🔍 Principais Indicadores
 | Indicador | Descrição |
@@ -29,27 +35,19 @@ O projeto utilizou uma base longitudinal composta por:
 
 ## 📈 Principais Insights
 ### ✅ Evolução Temporal
-* **Redução da Defasagem:** De **69,9% (2022)** para **46,2% (2024)**.
-* **Avanço Pedagógico:** O nível **Topázio** cresceu de 15,1% para 30,9% no período.
-* O **INDE médio** apresentou evolução constante ao longo do tempo.
+* **Redução da Defasagem:** A taxa caiu de **69,9% (2022)** para **46,2% (2024)**.
+* **Avanço Pedagógico:** O nível **Topázio** evoluiu de 15,1% para 30,9% no período, indicando melhora na trajetória dos alunos.
 
-### ✅ Fatores-Chave de Sucesso
-Identificou-se uma forte correlação entre Engajamento (**IEG**), Desempenho (**IDA**) e o Índice de Desenvolvimento (**INDE**).
+### ✅ Fatores-Chave
+Forte correlação identificada entre Engajamento e Desempenho:
 * **IDA × INDE:** 0.78
 * **IEG × INDE:** 0.74
 
 ## 🤖 Machine Learning
 ### 📌 Objetivo
-Desenvolver um modelo preditivo para identificar alunos em risco de defasagem educacional.
+Identificar preventivamente alunos com risco de defasagem educacional.
 
-### 🔧 Pipeline do Modelo
-1.  Tratamento de dados & Feature Engineering
-2.  Balanceamento de classes com **SMOTE**
-3.  Algoritmo **Random Forest**
-4.  Ajuste de Threshold para confiabilidade pedagógica
-5.  Avaliação de performance
-
-### 📊 Resultados do Modelo
+### 📊 Resultados do Modelo (Random Forest)
 | Métrica | Resultado |
 | :--- | :--- |
 | **ROC-AUC** | 0.75 |
@@ -57,9 +55,9 @@ Desenvolver um modelo preditivo para identificar alunos em risco de defasagem ed
 | **Recall** | 20% |
 | **Acurácia** | 73% |
 
-> **Estratégia:** O modelo prioriza a **Precisão** para reduzir falsos positivos, garantindo que os alertas gerados para a equipe pedagógica sejam altamente confiáveis.
+> **Estratégia:** O modelo foi calibrado com foco em **Precisão** para garantir que as intervenções pedagógicas sejam direcionadas com alta assertividade, evitando falsos alertas.
 
-### ⚙️ Variáveis (Features) Utilizadas
+### ⚙️ Features Utilizadas
 ```python
 features = [
     'IDA', 'IEG', 'IAA', 'IPS', 
