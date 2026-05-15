@@ -151,14 +151,14 @@ with tab3:
         st.pyplot(fig)
 
 # =============================================================================
-# ABA 4: VÍDEO (GOOGLE DRIVE)
+# ABA 4: VÍDEO 
 # =============================================================================
 with tab4:
-    st.header("🎥 Pitch e Demonstração")
+    st.header("🎥 Demonstração")
     st.markdown("Assista abaixo ao vídeo de apresentação do Tech Challenge Fase 4.")
     
     # Link convertido para o formato de visualização direta do Drive
-    video_url = "https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/preview"
+    video_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
     
     st.components.v1.iframe(video_url, width=800, height=450)
     
