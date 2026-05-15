@@ -6,10 +6,22 @@ import matplotlib.pyplot as plt
 import os
 
 # =============================================================================
-# TEMA GLOBAL — alinhado ao layout da apresentação Gamma (azul escuro + moderno)
+# CONFIGURAÇÃO DA PÁGINA
 # =============================================================================
+
+st.set_page_config(
+    page_title="Modelo Preditivo",
+    page_icon="📊",
+    layout="wide"
+)
+
+# =============================================================================
+# TEMA GLOBAL
+# =============================================================================
+
 st.markdown("""
 <style>
+
 /* ── Paleta base ── */
 :root {
     --pm-blue-deep:   #0D1B2A;
@@ -32,38 +44,26 @@ st.markdown("""
     background: linear-gradient(180deg, #0D1B2A 0%, #0f2236 100%);
     border-right: 1px solid var(--pm-border);
 }
-[data-testid="stSidebar"] * { color: #CBD5DF !important; }
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2 { color: #F4A261 !important; }
+
+[data-testid="stSidebar"] * {
+    color: #CBD5DF !important;
+}
 
 /* ── Títulos ── */
-h1 { color: #F4A261 !important; letter-spacing: -0.5px; }
-h2, h3 { color: #7EC8E3 !important; }
+h1 {
+    color: #F4A261 !important;
+}
 
-/* ── Métricas (st.metric) ── */
+h2, h3 {
+    color: #7EC8E3 !important;
+}
+
+/* ── Cards ── */
 [data-testid="stMetric"] {
-    background: var(--pm-card-bg);
-    border: 1px solid var(--pm-border);
+    background: #132233;
+    border: 1px solid rgba(46,134,193,0.35);
     border-radius: 12px;
-    padding: 16px 20px;
-}
-[data-testid="stMetricLabel"]  { color: #8AAFC7 !important; font-size: 0.78rem; }
-[data-testid="stMetricValue"]  { color: #F4A261 !important; font-weight: 700; }
-[data-testid="stMetricDelta"]  { color: #7EC8E3 !important; }
-
-/* ── Dataframe / tabelas ── */
-[data-testid="stDataFrame"] {
-    border: 1px solid var(--pm-border);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* ── Selectbox / radio / slider ── */
-[data-testid="stSelectbox"] > div,
-[data-testid="stRadio"] > div {
-    background: var(--pm-card-bg);
-    border-radius: 8px;
-    border: 1px solid var(--pm-border);
+    padding: 16px;
 }
 
 /* ── Botões ── */
@@ -73,104 +73,60 @@ h2, h3 { color: #7EC8E3 !important; }
     border: none;
     border-radius: 8px;
     font-weight: 600;
-    transition: opacity .2s;
-}
-.stButton > button:hover { opacity: 0.88; }
-
-/* ── Dividers ── */
-hr { border-color: var(--pm-border) !important; }
-
-/* ── Info / Warning / Error boxes ── */
-[data-testid="stAlert"] {
-    border-radius: 10px;
-    border-left-width: 4px;
-}
-
-/* ── Caption / small text ── */
-[data-testid="stCaptionContainer"] { color: #8AAFC7 !important; }
-
-/* ── Apresentação fullscreen container ── */
-.pm-presentation-wrapper {
-    position: relative;
+    height: 45px;
     width: 100%;
-    padding-top: 56.25%;   /* 16:9 */
-    border-radius: 14px;
-    overflow: hidden;
-    border: 2px solid var(--pm-border);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.55);
-}
-.pm-presentation-wrapper iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: none;
 }
 
-/* ── Fullscreen button ── */
-.pm-fs-btn {
-    display: inline-block;
-    margin-top: 14px;
-    padding: 10px 24px;
-    background: linear-gradient(135deg, #1B4F72, #2E86C1);
-    color: #fff !important;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.92rem;
-    transition: opacity .2s;
-    cursor: pointer;
+.stButton > button:hover {
+    opacity: 0.90;
 }
-.pm-fs-btn:hover { opacity: 0.82; text-decoration: none; }
+
+/* ── Inputs ── */
+.stTextInput input,
+.stNumberInput input {
+    background-color: #132233;
+    color: white;
+    border-radius: 8px;
+}
+
+/* ── Slider ── */
+.stSlider {
+    padding-top: 10px;
+}
+
+/* ── Tabela ── */
+[data-testid="stDataFrame"] {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
-
 # =============================================================================
-# CONSTANTES
+# CONFIGURAÇÕES DO MATPLOTLIB
 # =============================================================================
-CORES = {
-    "primaria":   "#1B4F72",
-    "secundaria": "#2E86C1",
-    "destaque":   "#E74C3C",
-    "verde":      "#1E8449",
-    "amarelo":    "#F39C12",
-    "cinza":      "#7F8C8D",
-}
 
 plt.rcParams.update({
     "figure.facecolor": "white",
-    "axes.facecolor":   "#F8F9FA",
-    "axes.grid":        True,
-    "grid.alpha":       0.4,
-    "axes.spines.top":  False,
+    "axes.facecolor": "#F8F9FA",
+    "axes.grid": True,
+    "grid.alpha": 0.4,
+    "axes.spines.top": False,
     "axes.spines.right": False,
 })
 
-
-
-
-
-# ============================================
-# CONFIGURAÇÃO DA PÁGINA
-# ============================================
-
-st.set_page_config(
-    page_title="Modelo Preditivo",
-    page_icon="📊",
-    layout="wide"
-)
-
-# ============================================
+# =============================================================================
 # CAMINHO DO MODELO
-# ============================================
+# =============================================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
 
-# ============================================
+# =============================================================================
 # CARREGAR MODELO
-# ============================================
+# =============================================================================
 
 try:
     model = joblib.load(model_path)
@@ -179,25 +135,9 @@ except Exception as e:
     st.error(f'Erro ao carregar modelo: {e}')
     st.stop()
 
-# ============================================
-# TÍTULO
-# ============================================
-
-st.title("📊 Modelo Preditivo - Passos Mágicos")
-
-st.markdown("""
-Sistema de análise preditiva utilizando Machine Learning.
-""")
-
-# ============================================
-# SIDEBAR
-# ============================================
-
-
-
-# ============================================
+# =============================================================================
 # FEATURES DO MODELO
-# ============================================
+# =============================================================================
 
 features = [
     'IDA',
@@ -210,16 +150,28 @@ features = [
     'Anos_No_Programa'
 ]
 
-# ============================================
+# =============================================================================
+# HEADER
+# =============================================================================
+
+st.title("📊 Modelo Preditivo - Passos Mágicos")
+
+st.markdown("""
+Sistema de análise preditiva utilizando Machine Learning
+para classificação de risco de alunos.
+""")
+
+st.divider()
+
+# =============================================================================
 # FORMULÁRIO
-# ============================================
+# =============================================================================
 
-st.subheader("Inserir Dados")
+st.subheader("Inserir Dados do Aluno")
 
-
-# ============================================
-# NOME + CONFIGURAÇÕES
-# ============================================
+# =============================================================================
+# NOME + THRESHOLD
+# =============================================================================
 
 col_nome, col_threshold = st.columns([2, 1])
 
@@ -240,11 +192,9 @@ with col_threshold:
         step=0.01
     )
 
-
-
-# ============================================
+# =============================================================================
 # CAMPOS NUMÉRICOS
-# ============================================
+# =============================================================================
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -277,9 +227,9 @@ with col8:
         value=2
     )
 
-# ============================================
-# DATAFRAME
-# ============================================
+# =============================================================================
+# DATAFRAME MODELO
+# =============================================================================
 
 novo_registro = pd.DataFrame({
     'IDA': [IDA],
@@ -292,17 +242,17 @@ novo_registro = pd.DataFrame({
     'Anos_No_Programa': [Anos_No_Programa]
 })
 
-# ============================================
-# BOTÃO PREDIÇÃO
-# ============================================
+# =============================================================================
+# BOTÃO
+# =============================================================================
 
-if st.button("Gerar Análise"):
+if st.button("🔍 Gerar Análise"):
 
     try:
 
-        # ====================================
-        # PREVISÃO
-        # ====================================
+        # =========================================================================
+        # PREDIÇÃO
+        # =========================================================================
 
         probabilidade = model.predict_proba(
             novo_registro
@@ -310,11 +260,11 @@ if st.button("Gerar Análise"):
 
         predicao = int(probabilidade >= threshold)
 
-        # ====================================
-        # RESULTADOS
-        # ====================================
-
         st.divider()
+
+        # =========================================================================
+        # RESULTADO
+        # =========================================================================
 
         st.subheader("Resultado da Análise")
 
@@ -324,6 +274,7 @@ if st.button("Gerar Análise"):
         colA, colB = st.columns(2)
 
         with colA:
+
             st.metric(
                 "Probabilidade de Risco",
                 f"{probabilidade:.2%}"
@@ -332,17 +283,48 @@ if st.button("Gerar Análise"):
         with colB:
 
             if predicao == 1:
-                st.error("ALTO RISCO")
-            else:
-                st.success("BAIXO RISCO")
 
-        # ====================================
-        # GRÁFICO RISCO
-        # ====================================
+                st.markdown(
+                    '''
+                    <div style="
+                        background-color:#641E16;
+                        padding:20px;
+                        border-radius:10px;
+                        text-align:center;
+                        font-size:28px;
+                        font-weight:bold;
+                        color:white;">
+                        🚨 ALTO RISCO
+                    </div>
+                    ''',
+                    unsafe_allow_html=True
+                )
+
+            else:
+
+                st.markdown(
+                    '''
+                    <div style="
+                        background-color:#145A32;
+                        padding:20px;
+                        border-radius:10px;
+                        text-align:center;
+                        font-size:28px;
+                        font-weight:bold;
+                        color:white;">
+                        ✅ BAIXO RISCO
+                    </div>
+                    ''',
+                    unsafe_allow_html=True
+                )
+
+        # =========================================================================
+        # GRÁFICO DE RISCO
+        # =========================================================================
 
         st.subheader("Nível de Risco")
 
-        fig, ax = plt.subplots(figsize=(6, 3))
+        fig, ax = plt.subplots(figsize=(8, 2))
 
         ax.barh(
             ['Risco'],
@@ -355,15 +337,13 @@ if st.button("Gerar Análise"):
 
         st.pyplot(fig)
 
-        # ====================================
+        # =========================================================================
         # IMPORTÂNCIA FEATURES
-        # ====================================
+        # =========================================================================
 
         if hasattr(model, 'feature_importances_'):
 
-            st.subheader(
-                "Importância das Variáveis"
-            )
+            st.subheader("Importância das Variáveis")
 
             importancia = pd.DataFrame({
                 'Variavel': features,
@@ -386,9 +366,9 @@ if st.button("Gerar Análise"):
 
             st.pyplot(fig2)
 
-        # ====================================
+        # =========================================================================
         # DADOS UTILIZADOS
-        # ====================================
+        # =========================================================================
 
         st.subheader("Dados Informados")
 
@@ -403,15 +383,16 @@ if st.button("Gerar Análise"):
         st.dataframe(dados_exibicao)
 
     except Exception as e:
+
         st.error(f'Erro na previsão: {e}')
 
-# ============================================
+# =============================================================================
 # UPLOAD CSV
-# ============================================
+# =============================================================================
 
 st.divider()
 
-st.subheader("Análise em Lote")
+st.subheader("📂 Análise em Lote")
 
 arquivo = st.file_uploader(
     "Faça upload de um CSV",
@@ -428,7 +409,15 @@ if arquivo is not None:
 
         st.dataframe(df.head())
 
-        probabilidades = model.predict_proba(df)[:, 1]
+        # =========================================================================
+        # GARANTIR FEATURES CORRETAS
+        # =========================================================================
+
+        df_modelo = df[features]
+
+        probabilidades = model.predict_proba(
+            df_modelo
+        )[:, 1]
 
         df['Probabilidade_Risco'] = probabilidades
 
@@ -442,9 +431,9 @@ if arquivo is not None:
 
         st.dataframe(df)
 
-        # ====================================
+        # =========================================================================
         # HISTOGRAMA
-        # ====================================
+        # =========================================================================
 
         st.subheader("Distribuição de Probabilidades")
 
@@ -461,9 +450,9 @@ if arquivo is not None:
 
         st.pyplot(fig3)
 
-        # ====================================
+        # =========================================================================
         # DOWNLOAD CSV
-        # ====================================
+        # =========================================================================
 
         csv = df.to_csv(index=False).encode('utf-8')
 
@@ -475,4 +464,5 @@ if arquivo is not None:
         )
 
     except Exception as e:
+
         st.error(f'Erro no processamento do CSV: {e}')
