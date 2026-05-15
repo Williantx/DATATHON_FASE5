@@ -403,20 +403,20 @@ with tab2:
 # =============================================================================
 # ABA 3 — ANÁLISE TÉCNICA (com gráficos reais do modelo treinado)
 # =============================================================================
-    with tab3:
+with tab3:
     st.header("⚙️ Engenharia e Machine Learning")
 
     # KPIs reais do modelo
-    #report     = classification_report(y_test, pred_test, output_dict=True)
-    #precisao   = report['1']['precision']
-    #recall_val = report['1']['recall']
-    #f1_val     = report['1']['f1-score']
+    report     = classification_report(y_test, pred_test, output_dict=True)
+    precisao   = report['1']['precision']
+    recall_val = report['1']['recall']
+    f1_val     = report['1']['f1-score']
 
-    #k1, k2, k3, k4 = st.columns(4)
-    #k1.metric("ROC-AUC",             f"{roc_score:.3f}")
-    #k2.metric("Precisão (classe 1)",  f"{precisao:.2%}")
-    #k3.metric("Recall (classe 1)",    f"{recall_val:.2%}")
-    #k4.metric("F1-Score (classe 1)",  f"{f1_val:.2%}")
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("ROC-AUC",             f"{roc_score:.3f}")
+    k2.metric("Precisão (classe 1)",  f"{precisao:.2%}")
+    k3.metric("Recall (classe 1)",    f"{recall_val:.2%}")
+    k4.metric("F1-Score (classe 1)",  f"{f1_val:.2%}")
 
     st.divider()
 
