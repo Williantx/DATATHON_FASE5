@@ -84,7 +84,7 @@ st.markdown("""
 # =============================================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
-THRESHOLD_FIXO = 0.70
+THRESHOLD_FIXO = 0.75
 
 try:
     model = joblib.load(model_path)
