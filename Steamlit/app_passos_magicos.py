@@ -5,6 +5,151 @@ import joblib
 import matplotlib.pyplot as plt
 import os
 
+# =============================================================================
+# TEMA GLOBAL — alinhado ao layout da apresentação Gamma (azul escuro + moderno)
+# =============================================================================
+st.markdown("""
+<style>
+/* ── Paleta base ── */
+:root {
+    --pm-blue-deep:   #0D1B2A;
+    --pm-blue-mid:    #1B4F72;
+    --pm-blue-light:  #2E86C1;
+    --pm-accent:      #F4A261;
+    --pm-white:       #F8F9FA;
+    --pm-card-bg:     #132233;
+    --pm-border:      rgba(46,134,193,0.35);
+}
+
+/* ── Fundo principal ── */
+.stApp {
+    background: linear-gradient(160deg, #0D1B2A 0%, #102030 60%, #0D1B2A 100%);
+    color: #E8EDF2;
+}
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0D1B2A 0%, #0f2236 100%);
+    border-right: 1px solid var(--pm-border);
+}
+[data-testid="stSidebar"] * { color: #CBD5DF !important; }
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2 { color: #F4A261 !important; }
+
+/* ── Títulos ── */
+h1 { color: #F4A261 !important; letter-spacing: -0.5px; }
+h2, h3 { color: #7EC8E3 !important; }
+
+/* ── Métricas (st.metric) ── */
+[data-testid="stMetric"] {
+    background: var(--pm-card-bg);
+    border: 1px solid var(--pm-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+}
+[data-testid="stMetricLabel"]  { color: #8AAFC7 !important; font-size: 0.78rem; }
+[data-testid="stMetricValue"]  { color: #F4A261 !important; font-weight: 700; }
+[data-testid="stMetricDelta"]  { color: #7EC8E3 !important; }
+
+/* ── Dataframe / tabelas ── */
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--pm-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ── Selectbox / radio / slider ── */
+[data-testid="stSelectbox"] > div,
+[data-testid="stRadio"] > div {
+    background: var(--pm-card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--pm-border);
+}
+
+/* ── Botões ── */
+.stButton > button {
+    background: linear-gradient(135deg, #1B4F72, #2E86C1);
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: opacity .2s;
+}
+.stButton > button:hover { opacity: 0.88; }
+
+/* ── Dividers ── */
+hr { border-color: var(--pm-border) !important; }
+
+/* ── Info / Warning / Error boxes ── */
+[data-testid="stAlert"] {
+    border-radius: 10px;
+    border-left-width: 4px;
+}
+
+/* ── Caption / small text ── */
+[data-testid="stCaptionContainer"] { color: #8AAFC7 !important; }
+
+/* ── Apresentação fullscreen container ── */
+.pm-presentation-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;   /* 16:9 */
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid var(--pm-border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+}
+.pm-presentation-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+}
+
+/* ── Fullscreen button ── */
+.pm-fs-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #1B4F72, #2E86C1);
+    color: #fff !important;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: opacity .2s;
+    cursor: pointer;
+}
+.pm-fs-btn:hover { opacity: 0.82; text-decoration: none; }
+</style>
+""", unsafe_allow_html=True)
+
+
+# =============================================================================
+# CONSTANTES
+# =============================================================================
+CORES = {
+    "primaria":   "#1B4F72",
+    "secundaria": "#2E86C1",
+    "destaque":   "#E74C3C",
+    "verde":      "#1E8449",
+    "amarelo":    "#F39C12",
+    "cinza":      "#7F8C8D",
+}
+
+plt.rcParams.update({
+    "figure.facecolor": "white",
+    "axes.facecolor":   "#F8F9FA",
+    "axes.grid":        True,
+    "grid.alpha":       0.4,
+    "axes.spines.top":  False,
+    "axes.spines.right": False,
+})
+
+
+
+
+
 # ============================================
 # CONFIGURAÇÃO DA PÁGINA
 # ============================================
