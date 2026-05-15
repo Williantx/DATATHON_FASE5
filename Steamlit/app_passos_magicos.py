@@ -34,7 +34,7 @@ st.markdown("""
     }
     
     /* Forçar cor branca em parágrafos, marcações e textos gerais */
-    .stApp p, .stApp span, .stApp label, .stApp li {
+    .stApp p, .stApp span, .stApp label, .stApp li, .stApp div {
         color: #FFFFFF !important;
     }
     
@@ -134,6 +134,13 @@ with tab1:
         predicao = int(probabilidade >= THRESHOLD_FIXO)
 
         st.divider()
+        
+        # EXIBIÇÃO DO NOME DO ALUNO SE FOR PREENCHIDO
+        if nome_aluno:
+            st.markdown(f"### 👤 Aluno analisado: **{nome_aluno}**")
+        else:
+            st.markdown("### 👤 Aluno analisado: *Nome não informado*")
+
         colA, colB = st.columns(2)
         with colA:
             st.metric("Probabilidade de Risco", f"{probabilidade:.2%}")
@@ -187,13 +194,11 @@ with tab3:
         st.subheader("Importância das Variáveis")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
         
-        # Configuração do gráfico para casar com o estilo escuro
         fig, ax = plt.subplots(figsize=(10, 4), facecolor='#0D1B2A')
         ax.set_facecolor('#132233')
         
         ax.barh(importancia['Variavel'], importancia['Valor'], color='#2E86C1')
         
-        # Textos do gráfico em branco
         ax.tick_params(colors='white')
         ax.xaxis.label.set_color('white')
         ax.yaxis.label.set_color('white')
