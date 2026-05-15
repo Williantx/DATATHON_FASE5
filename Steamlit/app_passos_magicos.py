@@ -48,7 +48,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# CONFIGURAÇÕES E MODELO
+# CARREGAMENTO DO MODELO
 # =============================================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
@@ -68,7 +68,13 @@ features = ['IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'Fase_Num', 'IPV', 'Anos_No_Progr
 st.title("📊 Plataforma Analytics - Passos Mágicos")
 st.divider()
 
-tab1, tab2, tab3 = st.tabs(["🔍 Predição de Risco", "📽️ Apresentação", "⚙️ Análise Técnica"])
+# Criação das Abas (Adicionada aba de Vídeo)
+tab1, tab2, tab3, tab4 = st.tabs([
+    "🔍 Predição de Risco", 
+    "📽️ Apresentação", 
+    "⚙️ Análise Técnica",
+    "🎥 Vídeo Demonstrativo"
+])
 
 # =============================================================================
 # ABA 1: PREDIÇÃO
@@ -105,42 +111,34 @@ with tab1:
             st.markdown(f'<div style="background:{cor};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status}</div>', unsafe_allow_html=True)
 
 # =============================================================================
-# ABA 2: INTRODUÇÃO E APRESENTAÇÃO (GOOGLE SLIDES)
+# ABA 2: APRESENTAÇÃO (GOOGLE SLIDES)
 # =============================================================================
 with tab2:
-    st.header("Introdução do Projeto")
-    st.markdown("""
-    ### Transformando Dados em Oportunidades
-    Este projeto utiliza modelos preditivos para identificar alunos em situação de vulnerabilidade acadêmica ou psicossocial. 
-    O objetivo é permitir que a equipe pedagógica atue de forma proativa.
-    """)
-    
-    st.divider()
-    st.subheader("📽️ Visualização da Apresentação")
-    
-    # Link do Google Slides convertido para modo Embed
+    st.header("Apresentação do Projeto")
     slides_url = "https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/embed"
-    
-    st.components.v1.iframe(slides_url, height=500, scrolling=True)
-    
-    st.caption("Caso a visualização não carregue, verifique se o link possui permissão de 'Qualquer pessoa com o link'.")
+    st.components.v1.iframe(slides_url, height=550)
 
 # =============================================================================
 # ABA 3: ANÁLISE TÉCNICA
 # =============================================================================
 with tab3:
     st.header("⚙️ Detalhes Técnicos")
-    
-    st.markdown("""
-    ### Metodologia de Classificação
-    O modelo foi treinado utilizando uma arquitetura de árvores de decisão para classificar o risco de desempenho. 
-    O **Threshold de 0.70** foi definido para priorizar a precisão em casos de alto risco, evitando falsos alertas desnecessários.
-    """)
-    
     if hasattr(model, 'feature_importances_'):
-        st.subheader("Importância das Variáveis")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
         fig, ax = plt.subplots(figsize=(10, 4))
         ax.barh(importancia['Variavel'], importancia['Valor'], color='#F4A261')
-        ax.set_title("Impacto de cada indicador na predição", color='black')
         st.pyplot(fig)
+
+# =============================================================================
+# ABA 4: VÍDEO (GOOGLE DRIVE)
+# =============================================================================
+with tab4:
+    st.header("🎥 Pitch e Demonstração")
+    st.markdown("Assista abaixo ao vídeo de apresentação do Tech Challenge Fase 4.")
+    
+    # Link convertido para o formato de visualização direta do Drive
+    video_url = "https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/preview"
+    
+    st.components.v1.iframe(video_url, width=800, height=450)
+    
+    st.info("Nota: Certifique-se de que o vídeo no Google Drive esteja com a permissão 'Qualquer pessoa com o link pode visualizar'.")
