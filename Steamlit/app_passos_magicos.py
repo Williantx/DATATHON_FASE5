@@ -78,7 +78,7 @@ st.markdown("""
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
 
-# ATUALIZADO: Threshold para 0.70 conforme solicitado
+# VALOR ATUALIZADO: Threshold de 0.70 conforme solicitado
 THRESHOLD_FIXO = 0.70
 
 try:
@@ -108,28 +108,30 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.subheader("Inserir Dados do Aluno")
     nome_aluno = st.text_input("Nome do Aluno", placeholder="Digite o nome completo")
-    st.caption(f"ℹ️ Threshold de Risco fixado em {THRESHOLD_FIXO}")
+    st.caption(f"ℹ️ Threshold de Risco configurado em: {THRESHOLD_FIXO}")
 
     c1, c2, c3, c4 = st.columns(4)
-    IDA = c1.number_input("IDA", value=7.0, min_value=0.0, max_value=10.0)
-    IEG = c2.number_input("IEG", value=7.0, min_value=0.0, max_value=10.0)
-    IAA = c3.number_input("IAA", value=7.0, min_value=0.0, max_value=10.0)
-    IPS = c4.number_input("IPS", value=7.0, min_value=0.0, max_value=10.0)
+    IDA = c1.number_input("IDA (Desempenho)", value=10.0, min_value=0.0, max_value=10.0)
+    IEG = c2.number_input("IEG (Engajamento)", value=10.0, min_value=0.0, max_value=10.0)
+    IAA = c3.number_input("IAA", value=10.0, min_value=0.0, max_value=10.0)
+    IPS = c4.number_input("IPS", value=10.0, min_value=0.0, max_value=10.0)
 
     c5, c6, c7, c8 = st.columns(4)
-    IPP = c5.number_input("IPP", value=7.0, min_value=0.0, max_value=10.0)
-    Fase_Num = c6.number_input("Fase_Num", value=3)
-    IPV = c7.number_input("IPV", value=7.0, min_value=0.0, max_value=10.0)
-    Anos_No_Programa = c8.number_input("Anos_No_Programa", value=2)
+    IPP = c5.number_input("IPP", value=10.0, min_value=0.0, max_value=10.0)
+    Fase_Num = c6.number_input("Fase (Número)", value=3)
+    IPV = c7.number_input("IPV (Ponto de Virada)", value=10.0, min_value=0.0, max_value=10.0)
+    Anos_No_Programa = c8.number_input("Anos no Programa", value=2)
 
-    if st.button("🔍 Gerar Análise"):
+    if st.button("🔍 Gerar Diagnóstico"):
+        # Criar DataFrame para o modelo
         novo_registro = pd.DataFrame([[IDA, IEG, IAA, IPS, IPP, Fase_Num, IPV, Anos_No_Programa]], columns=features)
         
-        # Predição de probabilidade
+        # Obter probabilidade da classe 1 (Risco)
         probabilidade = model.predict_proba(novo_registro)[0][1]
         
         st.divider()
         
+        # Identificação do Aluno
         if nome_aluno:
             st.markdown(f"### 👤 Aluno analisado: **{nome_aluno}**")
         else:
@@ -140,39 +142,24 @@ with tab1:
             st.metric("Probabilidade de Risco", f"{probabilidade:.2%}")
         
         with colB:
-            # Lógica corrigida: Se >= 0.70 é ALTO RISCO (Vermelho)
+            # LÓGICA: Se probabilidade for MAIOR ou IGUAL ao threshold (0.70), é ALTO RISCO
             if probabilidade >= THRESHOLD_FIXO:
-                cor = "#641E16" # Vermelho Escuro
-                status = "🚨 ALTO RISCO"
-                st.markdown(f'<div style="background:{cor};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status}</div>', unsafe_allow_html=True)
+                cor_fundo = "#641E16" # Vermelho
+                status_texto = "🚨 ALTO RISCO DE DEFASAGEM"
+                st.markdown(f'<div style="background:{cor_fundo};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status_texto}</div>', unsafe_allow_html=True)
                 st.warning("Recomendação: Intervenção pedagógica imediata e acompanhamento psicossocial.")
             else:
-                cor = "#145A32" # Verde Escuro
-                status = "✅ SEM RISCO IMEDIATO"
-                st.markdown(f'<div style="background:{cor};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status}</div>', unsafe_allow_html=True)
+                cor_fundo = "#145A32" # Verde
+                status_texto = "✅ SEM RISCO IMEDIATO"
+                st.markdown(f'<div style="background:{cor_fundo};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status_texto}</div>', unsafe_allow_html=True)
                 st.info("O aluno apresenta indicadores estáveis. Manter monitoramento de rotina.")
-
-# =============================================================================
-# ABA 2: APRESENTAÇÃO
-# =============================================================================
-with tab2:
-    st.header("Dados que Transformam Vidas")
-    st.markdown("""
-    ### Inteligência Educacional Preventiva
-    Este ecossistema visa identificar alunos em risco de defasagem antes que o problema se consolide.
-    """)
-    st.divider()
-    slides_url = "https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/embed"
-    st.components.v1.iframe(slides_url, height=550)
 
 # =============================================================================
 # ABA 3: ANÁLISE TÉCNICA
 # =============================================================================
 with tab3:
-    st.header("⚙️ Engenharia e Machine Learning")
-    
     if hasattr(model, 'feature_importances_'):
-        st.subheader("Importância das Variáveis")
+        st.subheader("Importância das Variáveis no Modelo")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
         
         fig, ax = plt.subplots(figsize=(10, 4), facecolor='#0D1B2A')
@@ -190,9 +177,12 @@ with tab3:
         st.pyplot(fig)
 
 # =============================================================================
-# ABA 4: VÍDEO
+# ABAS DE CONTEÚDO (SLIDES E VÍDEO)
 # =============================================================================
+with tab2:
+    slides_url = "https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/embed"
+    st.components.v1.iframe(slides_url, height=550)
+
 with tab4:
-    st.header("🎥 Vídeo de Apresentação")
     youtube_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
     st.video(youtube_url)
