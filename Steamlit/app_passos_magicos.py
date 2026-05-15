@@ -48,15 +48,7 @@ Sistema de análise preditiva utilizando Machine Learning.
 # SIDEBAR
 # ============================================
 
-st.sidebar.header("Configurações")
 
-threshold = st.sidebar.slider(
-    "Threshold de Risco",
-    min_value=0.0,
-    max_value=1.0,
-    value=0.70,
-    step=0.01
-)
 
 # ============================================
 # FEATURES DO MODELO
@@ -79,14 +71,31 @@ features = [
 
 st.subheader("Inserir Dados")
 
+
 # ============================================
-# NOME DO ALUNO
+# NOME + CONFIGURAÇÕES
 # ============================================
 
-nome_aluno = st.text_input(
-    "Nome do Aluno",
-    placeholder="Digite o nome do aluno"
-)
+col_nome, col_threshold = st.columns([2, 1])
+
+with col_nome:
+
+    nome_aluno = st.text_input(
+        "Nome do Aluno",
+        placeholder="Digite o nome do aluno"
+    )
+
+with col_threshold:
+
+    threshold = st.slider(
+        "Threshold de Risco",
+        min_value=0.0,
+        max_value=1.0,
+        value=0.70,
+        step=0.01
+    )
+
+
 
 # ============================================
 # CAMPOS NUMÉRICOS
