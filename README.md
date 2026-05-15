@@ -2,6 +2,10 @@
 
 Projeto desenvolvido para a **Pós-Graduação em Data Analytics — FIAP**, com o objetivo de combater a defasagem educacional através de dados e inteligência artificial.
 
+## 🔗 Links do Projeto
+* **🎥 Vídeo de Demonstração:** [Assista aqui](https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/view?usp=sharing)
+* **🖼️ Apresentação Completa:** [Acesse os slides](https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/edit?usp=drive_link&ouid=113160887725821989157&rtpof=true&sd=true)
+
 ## 📁 Base de Dados
 O projeto utilizou uma base longitudinal composta por:
 * **3.030** registros.
@@ -39,11 +43,11 @@ Identificou-se uma forte correlação entre Engajamento (**IEG**), Desempenho (*
 Desenvolver um modelo preditivo para identificar alunos em risco de defasagem educacional.
 
 ### 🔧 Pipeline do Modelo
-1. Tratamento de dados & Feature Engineering
-2. Balanceamento de classes com **SMOTE**
-3. Algoritmo **Random Forest**
-4. Ajuste de Threshold para confiabilidade pedagógica
-5. Avaliação de performance
+1.  Tratamento de dados & Feature Engineering
+2.  Balanceamento de classes com **SMOTE**
+3.  Algoritmo **Random Forest**
+4.  Ajuste de Threshold para confiabilidade pedagógica
+5.  Avaliação de performance
 
 ### 📊 Resultados do Modelo
 | Métrica | Resultado |
@@ -54,14 +58,6 @@ Desenvolver um modelo preditivo para identificar alunos em risco de defasagem ed
 | **Acurácia** | 73% |
 
 > **Estratégia:** O modelo prioriza a **Precisão** para reduzir falsos positivos, garantindo que os alertas gerados para a equipe pedagógica sejam altamente confiáveis.
-
-##LINKS
-
-###Video
-https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/view?usp=sharing
-###Apresentação
-https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/edit?usp=drive_link&ouid=113160887725821989157&rtpof=true&sd=true
-
 
 ### ⚙️ Variáveis (Features) Utilizadas
 ```python
