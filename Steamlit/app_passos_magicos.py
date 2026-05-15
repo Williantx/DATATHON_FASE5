@@ -146,7 +146,7 @@ with tab1:
             st.metric("Probabilidade de Risco", f"{probabilidade:.2%}")
         with colB:
             cor = "#641E16" if predicao == 1 else "#145A32"
-            status = "🚨 ALTO RISCO" if predicao == 1 else "✅ BAIXO RISCO"
+            status = "✅ BAIXO RISCO" if predicao == 1 else "🚨 ALTO RISCO"
             st.markdown(f'<div style="background:{cor};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status}</div>', unsafe_allow_html=True)
 
 # =============================================================================
