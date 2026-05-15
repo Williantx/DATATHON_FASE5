@@ -154,12 +154,12 @@ with tab3:
 # ABA 4: VÍDEO 
 # =============================================================================
 with tab4:
-    st.header("🎥 Demonstração")
-    st.markdown("Assista abaixo ao vídeo de apresentação do Tech Challenge Fase 4.")
+    st.header("🎥 Vídeo de Apresentação do Datathon")
+    st.markdown("Assista ao pitch do projeto detalhando a evolução dos indicadores da Passos Mágicos.")
     
-    # Link convertido para o formato de visualização direta do Drive
-    video_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
+    # URL do vídeo enviado
+    youtube_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
     
-    st.components.v1.iframe(video_url, width=800, height=450)
+    st.video(youtube_url)
     
     
