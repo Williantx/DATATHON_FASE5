@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 # =============================================================================
-# TEMA GLOBAL CUSTOMIZADO
+# TEMA GLOBAL CUSTOMIZADO (TODAS AS LETRAS EM BRANCO)
 # =============================================================================
 st.markdown("""
 <style>
@@ -26,23 +26,55 @@ st.markdown("""
         --pm-accent:      #F4A261;
         --pm-white:       #F8F9FA;
     }
+    
+    /* Fundo e textos globais em branco */
     .stApp {
         background: linear-gradient(160deg, #0D1B2A 0%, #102030 60%, #0D1B2A 100%);
-        color: #E8EDF2;
+        color: #FFFFFF !important;
     }
-    h1 { color: #F4A261 !important; }
-    h2, h3 { color: #7EC8E3 !important; }
+    
+    /* Forçar cor branca em parágrafos, marcações e textos gerais */
+    .stApp p, .stApp span, .stApp label, .stApp li {
+        color: #FFFFFF !important;
+    }
+    
+    /* Títulos principais e secundários em branco */
+    h1, h2, h3, h4, h5, h6 {
+        color: #FFFFFF !important;
+    }
+    
+    /* Textos dentro das Abas (Tabs) */
+    button[data-baseweb="tab"] p {
+        color: #FFFFFF !important;
+    }
+    
+    /* Métricas e Cards */
     .stMetric {
         background: #132233;
         border: 1px solid rgba(46,134,193,0.35);
         border-radius: 12px;
         padding: 15px;
     }
+    div[data-testid="stMetricValue"] {
+        color: #FFFFFF !important;
+    }
+    div[data-testid="stMetricLabel"] p {
+        color: #FFFFFF !important;
+    }
+    
+    /* Inputs e caixas de texto */
+    .stTextInput input, .stNumberInput input {
+        color: #FFFFFF !important;
+        background-color: #132233 !important;
+    }
+    
+    /* Botão Principal */
     .stButton > button {
         background: linear-gradient(135deg, #1B4F72, #2E86C1);
-        color: white !important;
+        color: #FFFFFF !important;
         font-weight: 600;
         width: 100%;
+        border: none;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -68,7 +100,7 @@ features = ['IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'Fase_Num', 'IPV', 'Anos_No_Progr
 st.title("📊 Plataforma Analytics - Passos Mágicos")
 st.divider()
 
-# Criação das Abas (Adicionada aba de Vídeo)
+# Criação das 4 Abas
 tab1, tab2, tab3, tab4 = st.tabs([
     "🔍 Predição de Risco", 
     "📽️ Apresentação", 
@@ -114,7 +146,17 @@ with tab1:
 # ABA 2: APRESENTAÇÃO (GOOGLE SLIDES)
 # =============================================================================
 with tab2:
-    st.header("Apresentação do Projeto")
+    st.header("Dados que Transformam Vidas")
+    st.markdown("""
+    ### Inteligência Educacional Preventiva
+    Este ecossistema visa identificar alunos em risco de defasagem antes que o problema se consolide.
+    
+    *   **Base de Dados:** 3.030 registros acompanhados entre 2022 e 2024.
+    *   **Escopo:** 34 variáveis multidimensionais (acadêmicas, psicossociais e comportamentais).
+    *   **Evolução Real:** Redução da taxa de defasagem de 69.9% (2022) para 46.2% (2024).
+    *   **Jornada das Pedras:** Alunos no nível Topázio cresceram de 15.1% para 30.9%.
+    """)
+    st.divider()
     slides_url = "https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/embed"
     st.components.v1.iframe(slides_url, height=550)
 
@@ -122,44 +164,52 @@ with tab2:
 # ABA 3: ANÁLISE TÉCNICA
 # =============================================================================
 with tab3:
-    st.header("⚙️ Documentação Técnica")
+    st.header("⚙️ Engenharia e Machine Learning")
     
     col_t1, col_t2 = st.columns(2)
     with col_t1:
-        st.subheader("Metodologia")
-        st.write("""
-        - **Modelo:** Random Forest Classifier.
-        - **Variáveis Críticas:** IDA (Acadêmico) e IEG (Engajamento).
-        - **Processamento:** Normalização de dados e tratamento de outliers.
+        st.markdown("""
+        ### Performance e Validação
+        - **Algoritmo:** Random Forest Classifier.
+        - **Métricas:** Área sob a Curva ROC de **0.75** com Precisão de **86%**.
+        - **Estratégia de Alerta:** Priorização da precisão para mitigar alarmes falsos positivos e otimizar as ações pedagógicas.
         """)
-    
     with col_t2:
-        st.subheader("Dicionário de Features")
-        st.caption("IDA: Indice de Desempenho Acadêmico")
-        st.caption("IEG: Indice de Engajamento")
-        st.caption("IPS: Indice Psicosocial")
-        st.caption("IPV: Indice de Ponto de Virada")
-
+        st.markdown("""
+        ### Correlações Relevantes
+        - **Engajamento (IEG):** Correlação de **0.74** com o Indice de Desenvolvimento (INDE). O engajamento atua como motor direto do desempenho escolar.
+        - **Acadêmico (IDA):** Correlação de **0.78** com o INDE.
+        """)
+        
     st.divider()
     
     if hasattr(model, 'feature_importances_'):
-        st.subheader("Importância das Variáveis (Feature Importance)")
+        st.subheader("Importância das Variáveis")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
-        fig, ax = plt.subplots(figsize=(10, 4))
+        
+        # Configuração do gráfico para casar com o estilo escuro
+        fig, ax = plt.subplots(figsize=(10, 4), facecolor='#0D1B2A')
+        ax.set_facecolor('#132233')
+        
         ax.barh(importancia['Variavel'], importancia['Valor'], color='#2E86C1')
-        ax.set_title("Influência no Diagnóstico de Risco")
+        
+        # Textos do gráfico em branco
+        ax.tick_params(colors='white')
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.title.set_color('white')
+        
+        for spine in ax.spines.values():
+            spine.set_color('white')
+            
         st.pyplot(fig)
 
 # =============================================================================
-# ABA 4: VÍDEO 
+# ABA 4: VÍDEO (YOUTUBE INTEGRADO)
 # =============================================================================
 with tab4:
     st.header("🎥 Vídeo de Apresentação do Datathon")
     st.markdown("Assista ao pitch do projeto detalhando a evolução dos indicadores da Passos Mágicos.")
     
-    # URL do vídeo enviado
     youtube_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
-    
     st.video(youtube_url)
-    
-    
