@@ -14,7 +14,7 @@ from sklearn.metrics import (
     classification_report, roc_auc_score, confusion_matrix, roc_curve,
     precision_score, recall_score
 )
-from imblearn.over_sampling import SMOTE
+
 
 # =============================================================================
 # CONFIGURAÇÃO DA PÁGINA
@@ -204,10 +204,10 @@ def carregar_e_processar():
 
     df_all['Fase_Num'] = df_all['Fase'].apply(fase_num)
 
-    # Target: IAN BAIXO = risco (aluno abaixo do nível adequado)
-    # IAN alto = aluno adequado ao nível = SEM risco
-    thr_ian = df_all['IAN'].quantile(0.25)
-    df_all['risco_modelo'] = (df_all['IAN'] <= thr_ian).astype(int)
+    # Target: INDE abaixo da mediana = em risco
+    # INDE é o índice geral — quanto menor, pior. Indicadores baixos → risco=1
+    thr_inde = df_all["INDE"].median()
+    df_all['risco_modelo'] = (df_all['INDE'] < thr_inde).astype(int)
 
     return df_all
 
@@ -224,11 +224,11 @@ def treinar_modelo(df_all):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, stratify=y, random_state=42)
 
-    X_res, y_res = SMOTE(random_state=42).fit_resample(X_train, y_train)
-
+    # class_weight='balanced' compensa o desbalanceamento sem depender do imblearn
     model = RandomForestClassifier(
-        n_estimators=300, max_depth=8, min_samples_leaf=5, random_state=42)
-    model.fit(X_res, y_res)
+        n_estimators=300, max_depth=8, min_samples_leaf=5,
+        class_weight='balanced', random_state=42)
+    model.fit(X_train, y_train)
 
     proba = model.predict_proba(X_test)[:, 1]
     pred  = (proba > THRESHOLD_FIXO).astype(int)
@@ -425,7 +425,7 @@ with tab3:
         st.markdown("""
         ### Performance e Validação
         - **Algoritmo:** Random Forest Classifier (300 estimadores, profundidade 8).
-        - **Balanceamento:** SMOTE para equalizar classes minoritárias no treino.
+        - **Balanceamento:** `class_weight='balanced'` para equalizar classes minoritárias no treino.
         - **Threshold:** 0.70 — calibrado para priorizar precisão e mitigar falsos positivos.
         """)
     with col_t2:
