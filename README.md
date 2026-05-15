@@ -13,7 +13,9 @@ Engajamento
 Indicadores psicossociais
 Evolução pedagógica
 Informações comportamentais
+
 🔍 Principais Indicadores
+
 Indicador	Descrição
 IAN	Indicador de Adequação de Nível
 IDA	Indicador de Desempenho Acadêmico
@@ -25,6 +27,7 @@ IPV	Indicador de Ponto de Virada
 INDE	Índice de Desenvolvimento Educacional
 📈 Principais Insights
 ✅ Evolução Temporal
+
 A taxa de defasagem reduziu de:
 69,9% (2022)
 para 46,2% (2024)
@@ -55,13 +58,16 @@ Indicando avanço consistente na trajetória dos alunos.
 Desenvolver um modelo capaz de identificar alunos em risco de defasagem educacional.
 
 🔧 Pipeline do Modelo
+
 Tratamento de dados
 Feature Engineering
 Balanceamento com SMOTE
 Random Forest
 Ajuste de Threshold
 Avaliação de performance
+
 ⚙️ Variáveis Utilizadas
+
 features = [
     'IDA',
     'IEG',
@@ -78,6 +84,8 @@ ROC-AUC	0.75
 Precisão	86%
 Recall	20%
 Accuracy	73%
+
+
 🧠 Estratégia do Modelo
 
 O modelo foi calibrado para priorizar precisão e reduzir falsos positivos.
