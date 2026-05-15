@@ -122,11 +122,32 @@ with tab2:
 # ABA 3: ANÁLISE TÉCNICA
 # =============================================================================
 with tab3:
-    st.header("⚙️ Detalhes Técnicos")
+    st.header("⚙️ Documentação Técnica")
+    
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        st.subheader("Metodologia")
+        st.write("""
+        - **Modelo:** Random Forest Classifier.
+        - **Variáveis Críticas:** IDA (Acadêmico) e IEG (Engajamento).
+        - **Processamento:** Normalização de dados e tratamento de outliers.
+        """)
+    
+    with col_t2:
+        st.subheader("Dicionário de Features")
+        st.caption("IDA: Indice de Desempenho Acadêmico")
+        st.caption("IEG: Indice de Engajamento")
+        st.caption("IPS: Indice Psicosocial")
+        st.caption("IPV: Indice de Ponto de Virada")
+
+    st.divider()
+    
     if hasattr(model, 'feature_importances_'):
+        st.subheader("Importância das Variáveis (Feature Importance)")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
         fig, ax = plt.subplots(figsize=(10, 4))
-        ax.barh(importancia['Variavel'], importancia['Valor'], color='#F4A261')
+        ax.barh(importancia['Variavel'], importancia['Valor'], color='#2E86C1')
+        ax.set_title("Influência no Diagnóstico de Risco")
         st.pyplot(fig)
 
 # =============================================================================
@@ -141,4 +162,4 @@ with tab4:
     
     st.components.v1.iframe(video_url, width=800, height=450)
     
-    st.info("Nota: Certifique-se de que o vídeo no Google Drive esteja com a permissão 'Qualquer pessoa com o link pode visualizar'.")
+    
