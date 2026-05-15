@@ -55,6 +55,14 @@ Desenvolver um modelo preditivo para identificar alunos em risco de defasagem ed
 
 > **Estratégia:** O modelo prioriza a **Precisão** para reduzir falsos positivos, garantindo que os alertas gerados para a equipe pedagógica sejam altamente confiáveis.
 
+##LINKS
+
+###Video
+https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/view?usp=sharing
+###Apresentação
+https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/edit?usp=drive_link&ouid=113160887725821989157&rtpof=true&sd=true
+
+
 ### ⚙️ Variáveis (Features) Utilizadas
 ```python
 features = [
