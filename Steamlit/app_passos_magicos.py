@@ -84,7 +84,7 @@ with tab1:
     with col_nome:
         nome_aluno = st.text_input("Nome do Aluno", placeholder="Digite o nome completo")
     with col_threshold:
-        threshold = st.slider("Threshold de Risco", 0.0, 1.0, 0.70, 0.01)
+        threshold = st.slider("Threshold de Risco",0.70)
 
     c1, c2, c3, c4 = st.columns(4)
     IDA = c1.number_input("IDA", value=7.0)
