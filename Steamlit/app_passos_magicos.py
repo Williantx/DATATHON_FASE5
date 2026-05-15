@@ -404,7 +404,7 @@ with tab2:
 # ABA 3 — ANÁLISE TÉCNICA (com gráficos reais do modelo treinado)
 # =============================================================================
     with tab3:
-    #st.header("⚙️ Engenharia e Machine Learning")
+    st.header("⚙️ Engenharia e Machine Learning")
 
     # KPIs reais do modelo
     #report     = classification_report(y_test, pred_test, output_dict=True)
