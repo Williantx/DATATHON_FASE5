@@ -79,6 +79,19 @@ features = [
 
 st.subheader("Inserir Dados")
 
+# ============================================
+# NOME DO ALUNO
+# ============================================
+
+nome_aluno = st.text_input(
+    "Nome do Aluno",
+    placeholder="Digite o nome do aluno"
+)
+
+# ============================================
+# CAMPOS NUMÉRICOS
+# ============================================
+
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -151,6 +164,9 @@ if st.button("Gerar Análise"):
 
         st.subheader("Resultado da Análise")
 
+        if nome_aluno:
+            st.info(f"👤 Aluno analisado: {nome_aluno}")
+
         colA, colB = st.columns(2)
 
         with colA:
@@ -167,7 +183,7 @@ if st.button("Gerar Análise"):
                 st.success("BAIXO RISCO")
 
         # ====================================
-        # GAUGE
+        # GRÁFICO RISCO
         # ====================================
 
         st.subheader("Nível de Risco")
@@ -181,10 +197,12 @@ if st.button("Gerar Análise"):
 
         ax.set_xlim(0, 1)
 
+        ax.set_xlabel('Probabilidade')
+
         st.pyplot(fig)
 
         # ====================================
-        # IMPORTÂNCIA DAS FEATURES
+        # IMPORTÂNCIA FEATURES
         # ====================================
 
         if hasattr(model, 'feature_importances_'):
@@ -220,7 +238,15 @@ if st.button("Gerar Análise"):
 
         st.subheader("Dados Informados")
 
-        st.dataframe(novo_registro)
+        dados_exibicao = novo_registro.copy()
+
+        dados_exibicao.insert(
+            0,
+            'Nome_Aluno',
+            nome_aluno
+        )
+
+        st.dataframe(dados_exibicao)
 
     except Exception as e:
         st.error(f'Erro na previsão: {e}')
@@ -263,7 +289,7 @@ if arquivo is not None:
         st.dataframe(df)
 
         # ====================================
-        # GRÁFICO DISTRIBUIÇÃO
+        # HISTOGRAMA
         # ====================================
 
         st.subheader("Distribuição de Probabilidades")
@@ -296,4 +322,3 @@ if arquivo is not None:
 
     except Exception as e:
         st.error(f'Erro no processamento do CSV: {e}')
-
