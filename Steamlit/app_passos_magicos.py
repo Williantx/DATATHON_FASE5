@@ -8,461 +8,172 @@ import os
 # =============================================================================
 # CONFIGURAÇÃO DA PÁGINA
 # =============================================================================
-
 st.set_page_config(
-    page_title="Modelo Preditivo",
+    page_title="Analytics - Passos Mágicos",
     page_icon="📊",
     layout="wide"
 )
 
 # =============================================================================
-# TEMA GLOBAL
+# TEMA GLOBAL CUSTOMIZADO
 # =============================================================================
-
 st.markdown("""
 <style>
-
-/* ── Paleta base ── */
-:root {
-    --pm-blue-deep:   #0D1B2A;
-    --pm-blue-mid:    #1B4F72;
-    --pm-blue-light:  #2E86C1;
-    --pm-accent:      #F4A261;
-    --pm-white:       #F8F9FA;
-    --pm-card-bg:     #132233;
-    --pm-border:      rgba(46,134,193,0.35);
-}
-
-/* ── Fundo principal ── */
-.stApp {
-    background: linear-gradient(160deg, #0D1B2A 0%, #102030 60%, #0D1B2A 100%);
-    color: #E8EDF2;
-}
-
-/* ── Sidebar ── */
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0D1B2A 0%, #0f2236 100%);
-    border-right: 1px solid var(--pm-border);
-}
-
-[data-testid="stSidebar"] * {
-    color: #CBD5DF !important;
-}
-
-/* ── Títulos ── */
-h1 {
-    color: #F4A261 !important;
-}
-
-h2, h3 {
-    color: #7EC8E3 !important;
-}
-
-/* ── Cards ── */
-[data-testid="stMetric"] {
-    background: #132233;
-    border: 1px solid rgba(46,134,193,0.35);
-    border-radius: 12px;
-    padding: 16px;
-}
-
-/* ── Botões ── */
-.stButton > button {
-    background: linear-gradient(135deg, #1B4F72, #2E86C1);
-    color: white !important;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    height: 45px;
-    width: 100%;
-}
-
-.stButton > button:hover {
-    opacity: 0.90;
-}
-
-/* ── Inputs ── */
-.stTextInput input,
-.stNumberInput input {
-    background-color: #132233;
-    color: white;
-    border-radius: 8px;
-}
-
-/* ── Slider ── */
-.stSlider {
-    padding-top: 10px;
-}
-
-/* ── Tabela ── */
-[data-testid="stDataFrame"] {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
+    :root {
+        --pm-blue-deep:   #0D1B2A;
+        --pm-blue-mid:    #1B4F72;
+        --pm-blue-light:  #2E86C1;
+        --pm-accent:      #F4A261;
+        --pm-white:       #F8F9FA;
+    }
+    .stApp {
+        background: linear-gradient(160deg, #0D1B2A 0%, #102030 60%, #0D1B2A 100%);
+        color: #E8EDF2;
+    }
+    [data-testid="stSidebar"] {
+        background: #0D1B2A;
+        border-right: 1px solid rgba(46,134,193,0.3);
+    }
+    h1 { color: #F4A261 !important; }
+    h2, h3 { color: #7EC8E3 !important; }
+    .stMetric {
+        background: #132233;
+        border: 1px solid rgba(46,134,193,0.35);
+        border-radius: 12px;
+        padding: 15px;
+    }
+    .stButton > button {
+        background: linear-gradient(135deg, #1B4F72, #2E86C1);
+        color: white !important;
+        font-weight: 600;
+        width: 100%;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# CONFIGURAÇÕES DO MATPLOTLIB
+# CARREGAMENTO DO MODELO
 # =============================================================================
-
-plt.rcParams.update({
-    "figure.facecolor": "white",
-    "axes.facecolor": "#F8F9FA",
-    "axes.grid": True,
-    "grid.alpha": 0.4,
-    "axes.spines.top": False,
-    "axes.spines.right": False,
-})
-
-# =============================================================================
-# CAMINHO DO MODELO
-# =============================================================================
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
-
-# =============================================================================
-# CARREGAR MODELO
-# =============================================================================
 
 try:
     model = joblib.load(model_path)
-
 except Exception as e:
     st.error(f'Erro ao carregar modelo: {e}')
     st.stop()
 
-# =============================================================================
-# FEATURES DO MODELO
-# =============================================================================
-
-features = [
-    'IDA',
-    'IEG',
-    'IAA',
-    'IPS',
-    'IPP',
-    'Fase_Num',
-    'IPV',
-    'Anos_No_Programa'
-]
+features = ['IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'Fase_Num', 'IPV', 'Anos_No_Programa']
 
 # =============================================================================
-# HEADER
+# HEADER PRINCIPAL
 # =============================================================================
-
-st.title("📊 Modelo Preditivo - Passos Mágicos")
-
-st.markdown("""
-Sistema de análise preditiva utilizando Machine Learning
-para classificação de risco de alunos.
-""")
-
+st.title("📊 Plataforma Analytics - Passos Mágicos")
 st.divider()
 
-# =============================================================================
-# FORMULÁRIO
-# =============================================================================
-
-st.subheader("Inserir Dados do Aluno")
+# Criação das Abas
+tab1, tab2, tab3 = st.tabs(["🔍 Predição de Risco", "📽️ Apresentação", "⚙️ Análise Técnica"])
 
 # =============================================================================
-# NOME + THRESHOLD
+# ABA 1: PREDIÇÃO (SEU CÓDIGO ORIGINAL)
 # =============================================================================
+with tab1:
+    st.subheader("Inserir Dados do Aluno")
+    
+    col_nome, col_threshold = st.columns([2, 1])
+    with col_nome:
+        nome_aluno = st.text_input("Nome do Aluno", placeholder="Digite o nome completo")
+    with col_threshold:
+        threshold = st.slider("Threshold de Risco", 0.0, 1.0, 0.70, 0.01)
 
-col_nome, col_threshold = st.columns([2, 1])
+    c1, c2, c3, c4 = st.columns(4)
+    IDA = c1.number_input("IDA", value=7.0)
+    IEG = c2.number_input("IEG", value=7.0)
+    IAA = c3.number_input("IAA", value=7.0)
+    IPS = c4.number_input("IPS", value=7.0)
 
-with col_nome:
+    c5, c6, c7, c8 = st.columns(4)
+    IPP = c5.number_input("IPP", value=7.0)
+    Fase_Num = c6.number_input("Fase_Num", value=3)
+    IPV = c7.number_input("IPV", value=7.0)
+    Anos_No_Programa = c8.number_input("Anos_No_Programa", value=2)
 
-    nome_aluno = st.text_input(
-        "Nome do Aluno",
-        placeholder="Digite o nome do aluno"
-    )
+    novo_registro = pd.DataFrame([[IDA, IEG, IAA, IPS, IPP, Fase_Num, IPV, Anos_No_Programa]], columns=features)
 
-with col_threshold:
-
-    threshold = st.slider(
-        "Threshold de Risco",
-        min_value=0.0,
-        max_value=1.0,
-        value=0.70,
-        step=0.01
-    )
-
-# =============================================================================
-# CAMPOS NUMÉRICOS
-# =============================================================================
-
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    IDA = st.number_input("IDA", value=7.0)
-
-with col2:
-    IEG = st.number_input("IEG", value=7.0)
-
-with col3:
-    IAA = st.number_input("IAA", value=7.0)
-
-with col4:
-    IPS = st.number_input("IPS", value=7.0)
-
-col5, col6, col7, col8 = st.columns(4)
-
-with col5:
-    IPP = st.number_input("IPP", value=7.0)
-
-with col6:
-    Fase_Num = st.number_input("Fase_Num", value=3)
-
-with col7:
-    IPV = st.number_input("IPV", value=7.0)
-
-with col8:
-    Anos_No_Programa = st.number_input(
-        "Anos_No_Programa",
-        value=2
-    )
-
-# =============================================================================
-# DATAFRAME MODELO
-# =============================================================================
-
-novo_registro = pd.DataFrame({
-    'IDA': [IDA],
-    'IEG': [IEG],
-    'IAA': [IAA],
-    'IPS': [IPS],
-    'IPP': [IPP],
-    'Fase_Num': [Fase_Num],
-    'IPV': [IPV],
-    'Anos_No_Programa': [Anos_No_Programa]
-})
-
-# =============================================================================
-# BOTÃO
-# =============================================================================
-
-if st.button("🔍 Gerar Análise"):
-
-    try:
-
-        # =========================================================================
-        # PREDIÇÃO
-        # =========================================================================
-
-        probabilidade = model.predict_proba(
-            novo_registro
-        )[0][1]
-
+    if st.button("🔍 Gerar Análise"):
+        probabilidade = model.predict_proba(novo_registro)[0][1]
         predicao = int(probabilidade >= threshold)
 
         st.divider()
-
-        # =========================================================================
-        # RESULTADO
-        # =========================================================================
-
-        st.subheader("Resultado da Análise")
-
-        if nome_aluno:
-            st.info(f"👤 Aluno analisado: {nome_aluno}")
-
         colA, colB = st.columns(2)
-
         with colA:
-
-            st.metric(
-                "Probabilidade de Risco",
-                f"{probabilidade:.2%}"
-            )
-
+            st.metric("Probabilidade de Risco", f"{probabilidade:.2%}")
         with colB:
+            cor = "#641E16" if predicao == 1 else "#145A32"
+            status = "🚨 ALTO RISCO" if predicao == 1 else "✅ BAIXO RISCO"
+            st.markdown(f'<div style="background:{cor};padding:20px;border-radius:10px;text-align:center;font-size:24px;font-weight:bold;color:white;">{status}</div>', unsafe_allow_html=True)
 
-            if predicao == 1:
+# =============================================================================
+# ABA 2: INTRODUÇÃO E APRESENTAÇÃO
+# =============================================================================
+with tab2:
+    st.header("Introdução do Projeto")
+    st.markdown("""
+    ### Contexto e Objetivo
+    Este sistema foi desenvolvido para transformar dados educacionais em ações preventivas. 
+    Através do cruzamento de indicadores pedagógicos e psicossociais, identificamos padrões 
+    que precedem o desengajamento escolar.
+    
+    *   **Público-alvo:** Coordenadores e Tutores da Passos Mágicos.
+    *   **Impacto:** Redução na evasão e suporte personalizado para cada aluno.
+    """)
+    
+    st.divider()
+    
+    st.subheader("📽️ Apresentação Executiva")
+    st.info("Utilize o botão abaixo para baixar os slides completos da Fase 4.")
+    
+    # Simulação de download de PPT (Certifique-se que o arquivo existe na pasta)
+    ppt_file = os.path.join(BASE_DIR, "apresentacao.pptx")
+    if os.path.exists(ppt_file):
+        with open(ppt_file, "rb") as f:
+            st.download_button(
+                label="📥 Baixar Apresentação (PowerPoint)",
+                data=f,
+                file_name="TechChallenge_Fase4_Apresentacao.pptx",
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )
+    else:
+        st.warning("Arquivo 'apresentacao.pptx' não encontrado no diretório do servidor.")
 
-                st.markdown(
-                    '''
-                    <div style="
-                        background-color:#641E16;
-                        padding:20px;
-                        border-radius:10px;
-                        text-align:center;
-                        font-size:28px;
-                        font-weight:bold;
-                        color:white;">
-                        🚨 ALTO RISCO
-                    </div>
-                    ''',
-                    unsafe_allow_html=True
-                )
+# =============================================================================
+# ABA 3: ANÁLISE TÉCNICA
+# =============================================================================
+with tab3:
+    st.header("⚙️ Documentação Técnica")
+    
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        st.subheader("Metodologia")
+        st.write("""
+        - **Modelo:** Random Forest Classifier.
+        - **Variáveis Críticas:** IDA (Acadêmico) e IEG (Engajamento).
+        - **Processamento:** Normalização de dados e tratamento de outliers.
+        """)
+    
+    with col_t2:
+        st.subheader("Dicionário de Features")
+        st.caption("IDA: Indice de Desempenho Acadêmico")
+        st.caption("IEG: Indice de Engajamento")
+        st.caption("IPS: Indice Psicosocial")
+        st.caption("IPV: Indice de Ponto de Virada")
 
-            else:
-
-                st.markdown(
-                    '''
-                    <div style="
-                        background-color:#145A32;
-                        padding:20px;
-                        border-radius:10px;
-                        text-align:center;
-                        font-size:28px;
-                        font-weight:bold;
-                        color:white;">
-                        ✅ BAIXO RISCO
-                    </div>
-                    ''',
-                    unsafe_allow_html=True
-                )
-
-        # =========================================================================
-        # GRÁFICO DE RISCO
-        # =========================================================================
-
-        st.subheader("Nível de Risco")
-
-        fig, ax = plt.subplots(figsize=(8, 2))
-
-        ax.barh(
-            ['Risco'],
-            [probabilidade]
-        )
-
-        ax.set_xlim(0, 1)
-
-        ax.set_xlabel('Probabilidade')
-
+    st.divider()
+    
+    if hasattr(model, 'feature_importances_'):
+        st.subheader("Importância das Variáveis (Feature Importance)")
+        importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
+        fig, ax = plt.subplots(figsize=(10, 4))
+        ax.barh(importancia['Variavel'], importancia['Valor'], color='#2E86C1')
+        ax.set_title("Influência no Diagnóstico de Risco")
         st.pyplot(fig)
-
-        # =========================================================================
-        # IMPORTÂNCIA FEATURES
-        # =========================================================================
-
-        if hasattr(model, 'feature_importances_'):
-
-            st.subheader("Importância das Variáveis")
-
-            importancia = pd.DataFrame({
-                'Variavel': features,
-                'Importancia': model.feature_importances_
-            })
-
-            importancia = importancia.sort_values(
-                by='Importancia',
-                ascending=True
-            )
-
-            fig2, ax2 = plt.subplots(figsize=(8, 5))
-
-            ax2.barh(
-                importancia['Variavel'],
-                importancia['Importancia']
-            )
-
-            ax2.set_xlabel('Importância')
-
-            st.pyplot(fig2)
-
-        # =========================================================================
-        # DADOS UTILIZADOS
-        # =========================================================================
-
-        st.subheader("Dados Informados")
-
-        dados_exibicao = novo_registro.copy()
-
-        dados_exibicao.insert(
-            0,
-            'Nome_Aluno',
-            nome_aluno
-        )
-
-        st.dataframe(dados_exibicao)
-
-    except Exception as e:
-
-        st.error(f'Erro na previsão: {e}')
-
-# =============================================================================
-# UPLOAD CSV
-# =============================================================================
-
-st.divider()
-
-st.subheader("📂 Análise em Lote")
-
-arquivo = st.file_uploader(
-    "Faça upload de um CSV",
-    type=['csv']
-)
-
-if arquivo is not None:
-
-    try:
-
-        df = pd.read_csv(arquivo)
-
-        st.write("Prévia dos dados")
-
-        st.dataframe(df.head())
-
-        # =========================================================================
-        # GARANTIR FEATURES CORRETAS
-        # =========================================================================
-
-        df_modelo = df[features]
-
-        probabilidades = model.predict_proba(
-            df_modelo
-        )[:, 1]
-
-        df['Probabilidade_Risco'] = probabilidades
-
-        df['Classificacao'] = np.where(
-            df['Probabilidade_Risco'] >= threshold,
-            'ALTO RISCO',
-            'BAIXO RISCO'
-        )
-
-        st.subheader("Resultado")
-
-        st.dataframe(df)
-
-        # =========================================================================
-        # HISTOGRAMA
-        # =========================================================================
-
-        st.subheader("Distribuição de Probabilidades")
-
-        fig3, ax3 = plt.subplots(figsize=(8, 5))
-
-        ax3.hist(
-            df['Probabilidade_Risco'],
-            bins=10
-        )
-
-        ax3.set_xlabel('Probabilidade')
-
-        ax3.set_ylabel('Quantidade')
-
-        st.pyplot(fig3)
-
-        # =========================================================================
-        # DOWNLOAD CSV
-        # =========================================================================
-
-        csv = df.to_csv(index=False).encode('utf-8')
-
-        st.download_button(
-            label="📥 Download Resultado CSV",
-            data=csv,
-            file_name='resultado_analise.csv',
-            mime='text/csv'
-        )
-
-    except Exception as e:
-
-        st.error(f'Erro no processamento do CSV: {e}')
