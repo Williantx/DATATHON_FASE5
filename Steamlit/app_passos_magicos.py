@@ -52,10 +52,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# CARREGAMENTO DO MODELO
+# CARREGAMENTO DO MODELO E CONFIGURAÇÕES FIXAS
 # =============================================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'modelo.pkl')
+
+# DEFINIÇÃO DO THRESHOLD FIXO CONFORME SOLICITADO
+THRESHOLD_FIXO = 0.70
 
 try:
     model = joblib.load(model_path)
@@ -71,20 +74,18 @@ features = ['IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'Fase_Num', 'IPV', 'Anos_No_Progr
 st.title("📊 Plataforma Analytics - Passos Mágicos")
 st.divider()
 
-# Criação das Abas
+# Navegação por Abas
 tab1, tab2, tab3 = st.tabs(["🔍 Predição de Risco", "📽️ Apresentação", "⚙️ Análise Técnica"])
 
 # =============================================================================
-# ABA 1: PREDIÇÃO (SEU CÓDIGO ORIGINAL)
+# ABA 1: PREDIÇÃO (COM THRESHOLD TRAVADO EM 0.70)
 # =============================================================================
 with tab1:
     st.subheader("Inserir Dados do Aluno")
     
-    col_nome, col_threshold = st.columns([2, 1])
-    with col_nome:
-        nome_aluno = st.text_input("Nome do Aluno", placeholder="Digite o nome completo")
-    with col_threshold:
-        threshold = st.slider("Threshold de Risco",0.70)
+    # Campo de nome ocupa a largura total agora que o slider foi removido
+    nome_aluno = st.text_input("Nome do Aluno", placeholder="Digite o nome completo")
+    st.caption(f"ℹ️ O sistema utiliza um Threshold de Risco padrão de {THRESHOLD_FIXO}")
 
     c1, c2, c3, c4 = st.columns(4)
     IDA = c1.number_input("IDA", value=7.0)
@@ -102,7 +103,9 @@ with tab1:
 
     if st.button("🔍 Gerar Análise"):
         probabilidade = model.predict_proba(novo_registro)[0][1]
-        predicao = int(probabilidade >= threshold)
+        
+        # Uso do valor fixo para a predição
+        predicao = int(probabilidade >= THRESHOLD_FIXO)
 
         st.divider()
         colA, colB = st.columns(2)
@@ -119,61 +122,50 @@ with tab1:
 with tab2:
     st.header("Introdução do Projeto")
     st.markdown("""
-    ### Contexto e Objetivo
-    Este sistema foi desenvolvido para transformar dados educacionais em ações preventivas. 
-    Através do cruzamento de indicadores pedagógicos e psicossociais, identificamos padrões 
-    que precedem o desengajamento escolar.
+    ### Transformando Dados em Oportunidades
+    Este projeto utiliza modelos preditivos para identificar alunos em situação de vulnerabilidade acadêmica ou psicossocial. 
+    O objetivo é permitir que a equipe pedagógica atue de forma proativa.
     
-    *   **Público-alvo:** Coordenadores e Tutores da Passos Mágicos.
-    *   **Impacto:** Redução na evasão e suporte personalizado para cada aluno.
+    *   **Metodologia:** Classificação baseada em indicadores de desempenho e engajamento.
+    *   **Foco:** Garantir que nenhum aluno fique para trás na jornada de aprendizado.
     """)
     
     st.divider()
     
     st.subheader("📽️ Apresentação Executiva")
-    st.info("Utilize o botão abaixo para baixar os slides completos da Fase 4.")
-    
-    # Simulação de download de PPT (Certifique-se que o arquivo existe na pasta)
     ppt_file = os.path.join(BASE_DIR, "apresentacao.pptx")
     if os.path.exists(ppt_file):
         with open(ppt_file, "rb") as f:
             st.download_button(
                 label="📥 Baixar Apresentação (PowerPoint)",
                 data=f,
-                file_name="TechChallenge_Fase4_Apresentacao.pptx",
+                file_name="Apresentacao_Passos_Magicos.pptx",
                 mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
             )
     else:
-        st.warning("Arquivo 'apresentacao.pptx' não encontrado no diretório do servidor.")
+        st.warning("Arquivo 'apresentacao.pptx' não encontrado.")
 
 # =============================================================================
 # ABA 3: ANÁLISE TÉCNICA
 # =============================================================================
 with tab3:
-    st.header("⚙️ Documentação Técnica")
+    st.header("⚙️ Detalhes do Modelo")
     
     col_t1, col_t2 = st.columns(2)
     with col_t1:
-        st.subheader("Metodologia")
-        st.write("""
-        - **Modelo:** Random Forest Classifier.
-        - **Variáveis Críticas:** IDA (Acadêmico) e IEG (Engajamento).
-        - **Processamento:** Normalização de dados e tratamento de outliers.
-        """)
+        st.write("**Parâmetros de Decisão:**")
+        st.write(f"- Threshold de Corte: **{THRESHOLD_FIXO}**")
+        st.write("- Algoritmo: Random Forest / Gradient Boosting")
     
     with col_t2:
-        st.subheader("Dicionário de Features")
-        st.caption("IDA: Indice de Desempenho Acadêmico")
-        st.caption("IEG: Indice de Engajamento")
-        st.caption("IPS: Indice Psicosocial")
-        st.caption("IPV: Indice de Ponto de Virada")
+        st.write("**Indicadores Analisados:**")
+        st.caption("IDA, IEG, IAA, IPS, IPP, Fase, IPV e Tempo de Programa.")
 
     st.divider()
     
     if hasattr(model, 'feature_importances_'):
-        st.subheader("Importância das Variáveis (Feature Importance)")
+        st.subheader("Importância das Variáveis")
         importancia = pd.DataFrame({'Variavel': features, 'Valor': model.feature_importances_}).sort_values('Valor')
         fig, ax = plt.subplots(figsize=(10, 4))
-        ax.barh(importancia['Variavel'], importancia['Valor'], color='#2E86C1')
-        ax.set_title("Influência no Diagnóstico de Risco")
+        ax.barh(importancia['Variavel'], importancia['Valor'], color='#F4A261')
         st.pyplot(fig)
