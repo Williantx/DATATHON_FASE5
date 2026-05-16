@@ -397,7 +397,7 @@ with tab2:
     *   **Jornada das Pedras:** Alunos no nível Topázio cresceram de 15.1% para 30.9%.
     """)
     st.divider()
-    slides_url = "https://docs.google.com/presentation/d/1fML1FM6-ehQvI0PMGIva6K_SzxeSaAls/edit?usp=drive_link&ouid=110733554223081220971&rtpof=true&sd=true"
+    slides_url = "https://docs.google.com/presentation/d/1fML1FM6-ehQvI0PMGIva6K_SzxeSaAls/edit?usp=sharing&ouid=113160887725821989157&rtpof=true&sd=true"
     st.components.v1.iframe(slides_url, height=550)
 
 # =============================================================================
