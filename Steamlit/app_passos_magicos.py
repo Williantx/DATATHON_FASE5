@@ -397,7 +397,7 @@ with tab2:
     *   **Jornada das Pedras:** Alunos no nível Topázio cresceram de 15.1% para 30.9%.
     """)
     st.divider()
-    slides_url = "https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/embed"
+    slides_url = "https://docs.google.com/presentation/d/1fML1FM6-ehQvI0PMGIva6K_SzxeSaAls/edit?usp=drive_link&ouid=110733554223081220971&rtpof=true&sd=true"
     st.components.v1.iframe(slides_url, height=550)
 
 # =============================================================================
@@ -526,5 +526,5 @@ with tab3:
 with tab4:
     st.header("🎥 Vídeo de Apresentação do Datathon")
     st.markdown("Assista ao pitch do projeto detalhando a evolução dos indicadores da Passos Mágicos.")
-    youtube_url = "https://youtu.be/Fqq_1ExsETw?si=XenMar6fN2v6cjbW"
+    youtube_url = "https://youtu.be/yhk97R9sah8"
     st.video(youtube_url)
