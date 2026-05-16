@@ -53,7 +53,7 @@ Identificar preventivamente alunos com risco de defasagem educacional.
 | **ROC-AUC** | 0.96 |
 | **Precisão** | 93,24% |
 | **Recall** | 69,42% |
-| **Accuracy** | 083 % |
+| **Accuracy** | 83 % |
 
 > **Estratégia:** O modelo foi calibrado com foco em **Precisão** para garantir que as intervenções pedagógicas sejam direcionadas com alta assertividade, evitando falsos alertas.
 
