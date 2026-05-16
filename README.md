@@ -3,9 +3,9 @@
 Projeto desenvolvido para a **Pós-Graduação em Data Analytics — FIAP**, com o objetivo de combater a defasagem educacional através de dados e inteligência artificial.
 
 ## 🔗 Links do Projeto
-* **🚀 Aplicação Streamlit:** [Analytics - Passos Mágicos](https://passosmagicos.streamlit.app/)
-* **🎥 Vídeo de Demonstração:** [Assista aqui](https://drive.google.com/file/d/1QyP_YfHQeIK6cABuL_463aTfFvuyQXQU/view?usp=sharing)
-* **🖼️ Apresentação Completa:** [Acesse os slides](https://docs.google.com/presentation/d/19KuBSyKADQBgzwnsW4526j6pSOXu2c8D/edit?usp=drive_link&ouid=113160887725821989157&rtpof=true&sd=true)
+* **🚀 Aplicação Streamlit:** [Analytics - Passos Mágicos](https://datathonfase5paappsmagicos-uwrqwuonpjvmsnxfqogyzv.streamlit.app/)
+* **🎥 Vídeo de Demonstração:** [Assista aqui](https://www.youtube.com/watch?v=yhk97R9sah8&t=5s)
+* **🖼️ Apresentação Completa:** [Acesse os slides](https://docs.google.com/presentation/d/1fML1FM6-ehQvI0PMGIva6K_SzxeSaAls/edit?usp=drive_link&ouid=110733554223081220971&rtpof=true&sd=true)
 
 ## 📂 Estrutura do Repositório
 A organização do projeto segue a seguinte hierarquia de pastas:
