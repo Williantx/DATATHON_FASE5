@@ -50,10 +50,10 @@ Identificar preventivamente alunos com risco de defasagem educacional.
 ### 📊 Resultados do Modelo (Random Forest)
 | Métrica | Resultado |
 | :--- | :--- |
-| **ROC-AUC** | 0.75 |
-| **Precisão** | 86% |
-| **Recall** | 20% |
-| **Acurácia** | 73% |
+| **ROC-AUC** | 0.96 |
+| **Precisão** | 93,24% |
+| **Recall** | 69,42% |
+| **Accuracy** | 083 % |
 
 > **Estratégia:** O modelo foi calibrado com foco em **Precisão** para garantir que as intervenções pedagógicas sejam direcionadas com alta assertividade, evitando falsos alertas.
 
